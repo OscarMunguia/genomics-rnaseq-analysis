@@ -5,3 +5,5 @@ __pycache__/
 *.pyc
 .DS_Store
 ~$*.xlsx
+scripts/_*.py
+scripts/_*.txt
