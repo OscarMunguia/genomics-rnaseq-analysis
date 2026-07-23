@@ -1,0 +1,19 @@
+# Bulk RNA-seq DE pipeline (APOEhi vs Control)
+data_file: ../rnaseq-01.xlsx
+figures_dir: ../figures
+
+de:
+  pseudocount: 0.001
+  mean_expression_min: 1
+  log2fc_threshold: 1
+  fdr_threshold: 0.05
+
+pca:
+  top_variable_genes: 2000
+
+outputs:
+  - apoehi_vs_control_de_genes.csv
+  - volcano_corrected_labeled_top1.png
+  - pca.png
+  - top_genes_clean.png
+  - heatmap_clean.png

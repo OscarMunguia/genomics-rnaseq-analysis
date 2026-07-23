@@ -4,7 +4,7 @@ Generates figures/ and figures/apoehi_vs_control_de_genes.csv without Jupyter.
 """
 from __future__ import annotations
 
-import os
+import argparse
 import warnings
 from pathlib import Path
 
@@ -255,8 +255,32 @@ def export_results(df_volcano: pd.DataFrame) -> Path:
     return out
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="APOEhi vs Control DE pipeline (figures + CSV)."
+    )
+    parser.add_argument(
+        "--data",
+        type=Path,
+        default=ROOT / "rnaseq-01.xlsx",
+        help="FPKM Excel matrix (default: project root rnaseq-01.xlsx)",
+    )
+    parser.add_argument(
+        "--figures-dir",
+        type=Path,
+        default=FIGURES,
+        help="Output directory for plots and CSV (default: figures/)",
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
-    data_path = ROOT / "rnaseq-01.xlsx"
+    global FIGURES
+    args = parse_args()
+    FIGURES = args.figures_dir
+    FIGURES.mkdir(parents=True, exist_ok=True)
+
+    data_path = args.data
     if not data_path.exists():
         raise FileNotFoundError(
             f"Missing {data_path}. See docs/DOWNLOAD_DATA.md"

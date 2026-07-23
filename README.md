@@ -37,12 +37,23 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-1. Ensure `rnaseq-01.xlsx` is in the project root (see [docs/DOWNLOAD_DATA.md](docs/DOWNLOAD_DATA.md)).
-2. Open and run [`Analysis.ipynb`](Analysis.ipynb), **or** run without Jupyter:
+1. Verify data: `python scripts/verify_data.py`
+2. Ensure `rnaseq-01.xlsx` is in the project root (see [docs/DOWNLOAD_DATA.md](docs/DOWNLOAD_DATA.md)).
+3. Open and run [`Analysis.ipynb`](Analysis.ipynb), **or** run without Jupyter:
 
 ```bash
 python scripts/run_de_analysis.py
 ```
+
+### Snakemake workflow (reproducible)
+
+```bash
+cd workflow
+..\.venv\Scripts\python.exe -m snakemake -n
+..\.venv\Scripts\python.exe -m snakemake -j 1 --cores 1
+```
+
+See [workflow/README.md](workflow/README.md) for details.
 
 ---
 
@@ -54,7 +65,10 @@ rnaseq-01.xlsx              # FPKM expression matrix
 requirements.txt
 LICENSE
 docs/DOWNLOAD_DATA.md       # How to obtain the supplementary data
-scripts/run_de_analysis.py  # End-to-end script (figures + CSV)
+scripts/
+  verify_data.py            # Check rnaseq-01.xlsx columns
+  run_de_analysis.py        # End-to-end script (figures + CSV)
+workflow/                   # Snakemake pipeline (workflow/README.md)
 figures/                    # Plots and DE gene table
 ```
 
@@ -69,6 +83,7 @@ figures/                    # Plots and DE gene table
 | Welch t-test + Benjamini–Hochberg FDR | Done |
 | Volcano, PCA, top genes, heatmap | Done |
 | Export DE gene table (CSV) | Done |
+| Snakemake workflow | Done |
 | Count-based DE (DESeq2/edgeR) | Out of scope (exploratory FPKM project) |
 
 **Main comparison:** `APOEhi vs Control`

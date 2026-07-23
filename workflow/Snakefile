@@ -1,0 +1,32 @@
+configfile: "config/config.yaml"
+
+from pathlib import Path
+
+PYTHON = str((Path(workflow.basedir) / ".." / ".venv" / "Scripts" / "python.exe").resolve())
+
+FIGURES = config["figures_dir"]
+DATA = config["data_file"]
+
+OUTPUTS = [f"{FIGURES}/{name}" for name in config["outputs"]]
+
+
+rule all:
+    input:
+        OUTPUTS,
+
+
+rule de_analysis:
+    input:
+        data=DATA,
+    output:
+        csv=f"{FIGURES}/apoehi_vs_control_de_genes.csv",
+        volcano=f"{FIGURES}/volcano_corrected_labeled_top1.png",
+        pca=f"{FIGURES}/pca.png",
+        top_genes=f"{FIGURES}/top_genes_clean.png",
+        heatmap=f"{FIGURES}/heatmap_clean.png",
+    shell:
+        """
+        "{PYTHON}" ../scripts/run_de_analysis.py \
+            --data {input.data} \
+            --figures-dir {FIGURES}
+        """
