@@ -1,4 +1,4 @@
-.venv/
+﻿.venv/
 .venv-1/
 __pycache__/
 .ipynb_checkpoints/
@@ -7,3 +7,4 @@ __pycache__/
 ~$*.xlsx
 scripts/_*.py
 scripts/_*.txt
+.snakemake/
